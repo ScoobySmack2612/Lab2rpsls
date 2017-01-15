@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
+import sys
 import random
+import webbrowser
 
 W = 900
 H = 700
@@ -151,15 +153,13 @@ if __name__ == "__main__":
     choices = ["Rock","Paper","Scissors","Lizard","Spock"]
     
     while run:
-        
-        
-        
-
 
         events = pygame.event.get()
         
         mouse = pygame.mouse.get_pos()
+        
         mouseclick = False
+        
         for event in events:
             if event.type == pygame.QUIT:
                 run = False
@@ -187,10 +187,10 @@ if __name__ == "__main__":
                 else:
                     begin = pygame.draw.rect(background, BANGRED,(400,450,100,50))
 
-                
                 textSurf, textRect = text_objects("BEGIN!", smallText)
                 textRect.center = ((400+(100/2)), (450+(50/2)))
                 background.blit(textSurf, textRect)
+                
             
             if Background == 2:
                 background.fill(WHITE)
@@ -299,7 +299,7 @@ if __name__ == "__main__":
                 if 770 + 100 > mouse[0] > 770 and 10 + 50 > mouse[1] > 10:
                     cont = pygame.draw.rect(background, SILVER,(770,10,120,50))
                     if mouseclick:
-                        run = False
+                        Background = 4
                 else:    
                     cont = pygame.draw.rect(background, BLACK,(770,10,120,50))
 
@@ -317,6 +317,34 @@ if __name__ == "__main__":
                     background.blit(wintext,(240,660))
                 else:         
                     background.blit(wintext,(320,660))
+
+            if Background == 4:
+                background.fill(WHITE)
+
+                byeText = menufont.render("Thank you for playing!",True,BLACK)
+                byeText2 = menufont.render("Come again soon!",True,BLACK)
+
+                likeText = smallText.render('Click if you liked it!', True, BANGRED)
+                likeicon = pygame.image.load("like.png")
+
+                background.blit(byeText,(130,10))
+                background.blit(likeText,(340,250))
+                background.blit(likeicon,(350,290))
+                background.blit(byeText2,(180,580))
+
+                if 400 + 100 > mouse[0] > 400 and 520 + 50 > mouse[1] > 520:
+                    begin = pygame.draw.rect(background, BRIGHT_RED,(400,520,100,50))
+                    if mouseclick:
+                        Background += 1
+                else:
+                    begin = pygame.draw.rect(background, BANGRED,(400,520,100,50))
+
+                textSurf, textRect = text_objects("Quit!", smallText)
+                textRect.center = ((400+(100/2)), (520+(50/2)))
+                background.blit(textSurf, textRect)
+
+                if 350 +  204 > mouse[0] > 290 and 290 + 204 > mouse[1] > 290 and mouseclick:
+                    webbrowser.open("heronnavarro.wordpess.com", new = 1)
 
         pygame.display.flip()
 
