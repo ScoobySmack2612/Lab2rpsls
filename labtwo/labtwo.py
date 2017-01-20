@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 import random
 import webbrowser
+import os.path
 
 W = 900
 H = 700
@@ -16,6 +17,8 @@ GREEN = (0,210,20)
 BRIGHT_GREEN= (20,255,0)
 SILVER = (132,132,132)
 
+Background = 1
+
 pscore = 0
 cscore = 0
 
@@ -23,6 +26,27 @@ cscore = 0
 def text_objects(text,font):
     textSurface = font.render(text, True, WHITE)
     return textSurface, textSurface.get_rect()
+
+def button(x,y,w,h,ic,ac,text,textstyle,action):
+    global Background
+    if x + w > mouse[0] > x and y + h > mouse[1] > y:
+        begin = pygame.draw.rect(background, ac,(x,y,w,h))
+        if action == "increment" and mouseclick:
+            Background +=1
+        elif action == "quit" and mouseclick:
+            url = "http://heronnavarro.wordpress.com"    
+            webbrowser.get().open(url)
+            pygame.QUIT
+            quit()
+        elif action == "repeat" and mouseclick:
+            Background = 1
+            
+    else:
+        begin = pygame.draw.rect(background, ic,(x,y,w,h))
+
+    textSurf, textRect = text_objects(text, textstyle)
+    textRect.center = ((x+(w/2)), (y+(h/2)))
+    background.blit(textSurf, textRect)
 
 def computer_choice():
     computerChoice = random.choice(choices)
@@ -111,10 +135,8 @@ def score_update(won):
     global cscore
     if won == "Player":
         pscore += 1
-        print pscore
     elif won == "Computer":
         cscore += 1
-        print cscore
     else: 
         pass
 
@@ -136,7 +158,6 @@ if __name__ == "__main__":
     gamefont = pygame.font.SysFont("Papyrus", 40, True)
     fineprint = pygame.font.SysFont("Papyrus",20,True)
 
-    Background = 1
 
     #image loads:
     rock = pygame.image.load("rock.png")
@@ -167,6 +188,7 @@ if __name__ == "__main__":
                 mouseclick = True
 
             if Background == 1:
+                playerChoice = ""
                 background.fill(WHITE)
                 atom = pygame.image.load("atom.png")
                 menuText1 = menufont.render("ROCK, PAPER,", True, BLACK)
@@ -177,19 +199,7 @@ if __name__ == "__main__":
                 background.blit(menuText2, [W/2-180,125])
                 background.blit(menuText3,[W/2-300,190])
 
-
-                
-
-                if 400 + 100 > mouse[0] > 400 and 450 + 50 > mouse[1] > 450:
-                    begin = pygame.draw.rect(background, BRIGHT_RED,(400,450,100,50))
-                    if mouseclick:
-                        Background += 1
-                else:
-                    begin = pygame.draw.rect(background, BANGRED,(400,450,100,50))
-
-                textSurf, textRect = text_objects("BEGIN!", smallText)
-                textRect.center = ((400+(100/2)), (450+(50/2)))
-                background.blit(textSurf, textRect)
+                gobtn = button(400,450,100,50,BANGRED,BRIGHT_RED,"BEGIN",smallText,"increment")
                 
             
             if Background == 2:
@@ -245,8 +255,6 @@ if __name__ == "__main__":
                     textSurf, textRect = text_objects("Submit!", smallText)
                     textRect.center = ((700+(120/2)), (620+(50/2)))
                     background.blit(textSurf, textRect)
-                else: 
-                    pass
                 
             if Background == 3:
                 background.fill(WHITE)
@@ -283,32 +291,11 @@ if __name__ == "__main__":
                 
                 wintext = smallText.render(winner, True, BLACK)
 
-                if 10 + 100 > mouse[0] > 10 and 10 + 50 > mouse[1] > 10:
-                    cont = pygame.draw.rect(background, BRIGHT_RED,(10,10,120,50))
-                    if mouseclick:
-                        playerChoice = ""
-                        computerChoice = ""
-                        Background = 1
-                else:    
-                    cont = pygame.draw.rect(background, BANGRED,(10,10,120,50))
-
-                textSurf, textRect = text_objects("Again!", smallText)
-                textRect.center = ((10+(120/2)), (10+(50/2)))
-                background.blit(textSurf, textRect)
-
-                if 770 + 100 > mouse[0] > 770 and 10 + 50 > mouse[1] > 10:
-                    cont = pygame.draw.rect(background, SILVER,(770,10,120,50))
-                    if mouseclick:
-                        Background = 4
-                else:    
-                    cont = pygame.draw.rect(background, BLACK,(770,10,120,50))
-
-                textSurf, textRect = text_objects("Quit!", smallText)
-                textRect.center = ((770+(120/2)), (10+(50/2)))
-                background.blit(textSurf, textRect)
+                repeatbtn = button(10,10,100,50,BANGRED,BRIGHT_RED,"AGAIN!",smallText,"repeat")
+                quitbtn = button(770,10,100,50,BLACK,SILVER,"QUIT!",smallText,"increment")
 
 
-                background.blit(pselect,(330,(-25)))
+                background.blit(pselect,(320,(-25)))
                 background.blit(vs,(410,(H/3+40)))
                 background.blit(cselect,(260,340))
 
@@ -316,7 +303,7 @@ if __name__ == "__main__":
                 if winner != "Tie! Try Again.": 
                     background.blit(wintext,(240,660))
                 else:         
-                    background.blit(wintext,(320,660))
+                    background.blit(wintext,(360,660))
 
             if Background == 4:
                 background.fill(WHITE)
@@ -324,29 +311,25 @@ if __name__ == "__main__":
                 byeText = menufont.render("Thank you for playing!",True,BLACK)
                 byeText2 = menufont.render("Come again soon!",True,BLACK)
 
-                likeText = smallText.render('Click if you liked it!', True, BANGRED)
+                likeText = smallText.render('Click below if you liked it!', True, BANGRED)
                 likeicon = pygame.image.load("like.png")
 
                 background.blit(byeText,(130,10))
-                background.blit(likeText,(340,250))
+                background.blit(likeText,(300,250))
                 background.blit(likeicon,(350,290))
                 background.blit(byeText2,(180,580))
 
-                if 400 + 100 > mouse[0] > 400 and 520 + 50 > mouse[1] > 520:
-                    begin = pygame.draw.rect(background, BRIGHT_RED,(400,520,100,50))
-                    if mouseclick:
-                        Background += 1
-                else:
-                    begin = pygame.draw.rect(background, BANGRED,(400,520,100,50))
+                endbtn = button(400,520,100,50,BLACK,SILVER,"QUIT",smallText,"quit")
 
-                textSurf, textRect = text_objects("Quit!", smallText)
-                textRect.center = ((400+(100/2)), (520+(50/2)))
-                background.blit(textSurf, textRect)
+                #url to wordpress
+                url = "http://heronnavarro.wordpress.com"
 
                 if 350 +  204 > mouse[0] > 290 and 290 + 204 > mouse[1] > 290 and mouseclick:
-                    webbrowser.open("heronnavarro.wordpess.com", new = 1)
+                    webbrowser.get().open(url)
 
         pygame.display.flip()
+
+        
 
 
 
