@@ -6,7 +6,7 @@ import webbrowser
 import os.path
 
 W = 900
-H = 700
+H = 650
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 BANGRED = (150,0,0)
@@ -155,6 +155,7 @@ if __name__ == "__main__":
 
     smallText = pygame.font.Font("freesansbold.ttf",25)
     menufont = pygame.font.SysFont("lilyupc", 100, True) 
+    bigtext = pygame.font.SysFont("lilypuc",50,True)
     gamefont = pygame.font.SysFont("Papyrus", 40, True)
     fineprint = pygame.font.SysFont("Papyrus",20,True)
 
@@ -211,8 +212,8 @@ if __name__ == "__main__":
                 
 
                 background.blit(selection,(210,180))
-                background.blit(selectText, (250,75))
-                background.blit(selectText2, (270,525))
+                background.blit(selectText, (220,75))
+                background.blit(selectText2, (230,525))
 
 
                 if 418 + 70 > mouse[0] > 418 and 205 + 70 > mouse[1] > 205 and mouseclick:
@@ -243,49 +244,49 @@ if __name__ == "__main__":
                     background.blit(pchoiceText2,(220,200))
                     background.blit(checkText, (20,250))
 
-                    if 700 + 100 > mouse[0] > 700 and 620 + 50 > mouse[1] > 620:
-                        cont = pygame.draw.rect(background, BRIGHT_GREEN,(700,620,120,50))
+                    if 90 + 120 > mouse[0] > 90 and 300 + 50 > mouse[1] > 300:
+                        cont = pygame.draw.rect(background, BRIGHT_GREEN,(90,300,120,50))
                         if mouseclick:
                             Background += 1
                             computerChoice = computer_choice()
                             winner = machine_comp(playerChoice,computerChoice)
                     else:    
-                        cont = pygame.draw.rect(background, GREEN,(700,620,120,50))
+                        cont = pygame.draw.rect(background, GREEN,(90,300,120,50))
 
                     textSurf, textRect = text_objects("Submit!", smallText)
-                    textRect.center = ((700+(120/2)), (620+(50/2)))
+                    textRect.center = ((90+(120/2)), (300+(50/2)))
                     background.blit(textSurf, textRect)
                 
             if Background == 3:
                 background.fill(WHITE)
 
-                pselect = menufont.render("Player: %s" % (pscore), True, BANGRED)
+                pselect = bigtext.render("Player: %s" % (pscore), True, BANGRED)
                 
                 if playerChoice == choices[0]:
-                    background.blit(rock, (330,70))
+                    background.blit(rock, (70,150))
                 elif playerChoice == choices[1]:
-                    background.blit(paper, (330,70))
+                    background.blit(paper, (70,150))
                 elif playerChoice == choices[2]:
-                    background.blit(scissors,(330,70))
+                    background.blit(scissors,(70,150))
                 elif playerChoice == choices[3]:
-                    background.blit(lizard, (330,70))
+                    background.blit(lizard, (70,150))
                 elif playerChoice == choices[4]:
-                    background.blit(spock, (330,70))
+                    background.blit(spock, (70,150))
                 
                 vs = menufont.render("VS", True, BLACK)
                 
-                cselect = menufont.render("Computer: %s" % (cscore), True, BANGRED)
+                cselect = bigtext.render("Computer: %s" % (cscore), True, BANGRED)
                 
                 if computerChoice == choices[0]:
-                    background.blit(rock, (330,435))
+                    background.blit(rock, (590,150))
                 elif computerChoice == choices[1]:
-                    background.blit(paper, (330,435))
+                    background.blit(paper, (590,150))
                 elif computerChoice == choices[2]:
-                    background.blit(scissors, (330,435))
+                    background.blit(scissors, (590,150))
                 elif computerChoice == choices[3]:
-                    background.blit(lizard, (330,435))
+                    background.blit(lizard, (590,150))
                 elif computerChoice == choices[4]:
-                    background.blit(spock, (330,435))
+                    background.blit(spock, (590,150))
                 else:
                     pass
                 
@@ -295,15 +296,15 @@ if __name__ == "__main__":
                 quitbtn = button(770,10,100,50,BLACK,SILVER,"QUIT!",smallText,"increment")
 
 
-                background.blit(pselect,(320,(-25)))
-                background.blit(vs,(410,(H/3+40)))
-                background.blit(cselect,(260,340))
+                background.blit(pselect,(80,500))
+                background.blit(vs,(390,(H/3+50)))
+                background.blit(cselect,(600,500))
 
                 
                 if winner != "Tie! Try Again.": 
-                    background.blit(wintext,(240,660))
+                    background.blit(wintext,(220,50))
                 else:         
-                    background.blit(wintext,(360,660))
+                    background.blit(wintext,(350,50))
 
             if Background == 4:
                 background.fill(WHITE)
@@ -314,17 +315,17 @@ if __name__ == "__main__":
                 likeText = smallText.render('Click below if you liked it!', True, BANGRED)
                 likeicon = pygame.image.load("like.png")
 
-                background.blit(byeText,(130,10))
-                background.blit(likeText,(300,250))
-                background.blit(likeicon,(350,290))
-                background.blit(byeText2,(180,580))
+                background.blit(byeText,(5,10))
+                background.blit(likeText,(300,150))
+                background.blit(likeicon,(350,200))
+                background.blit(byeText2,(110,550))
 
-                endbtn = button(400,520,100,50,BLACK,SILVER,"QUIT",smallText,"quit")
+                endbtn = button(400,450,100,50,BLACK,SILVER,"QUIT",smallText,"quit")
 
                 #url to wordpress
                 url = "http://heronnavarro.wordpress.com"
 
-                if 350 +  204 > mouse[0] > 290 and 290 + 204 > mouse[1] > 290 and mouseclick:
+                if 350 + 204 > mouse[0] > 350 and 200 + 204 > mouse[1] > 200 and mouseclick:
                     webbrowser.get().open(url)
 
         pygame.display.flip()
