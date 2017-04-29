@@ -195,10 +195,10 @@ if __name__ == "__main__":
                 menuText1 = menufont.render("ROCK, PAPER,", True, BLACK)
                 menuText2 = menufont.render("SCISSORS,", True, BANGRED)
                 menuText3 = menufont.render("LIZARD, SPOCK?", True, BLACK)
-                background.blit(atom,(440,0))
-                background.blit(menuText1, [W/2-240,60])
-                background.blit(menuText2, [W/2-180,125])
-                background.blit(menuText3,[W/2-300,190])
+                background.blit(atom,(540,0))
+                background.blit(menuText1, [W/2-240,70])
+                background.blit(menuText2, [W/2-180,135])
+                background.blit(menuText3,[W/2-300,200])
 
                 gobtn = button(400,450,100,50,BANGRED,BRIGHT_RED,"BEGIN",smallText,"increment")
                 
